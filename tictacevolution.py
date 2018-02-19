@@ -133,7 +133,7 @@ def gameover(check, board):
 		return True
 	if(board[0]==check and board[0]==board[4] and board[4]==board[8]):
 		return True
-	if(board[3]==check and board[3]==board[4] and board[3]==board[4]):
+	if(board[3]==check and board[3]==board[4] and board[3]==board[5]):
 		return True
 	if(board[6]==check and board[6]==board[7] and board[6]==board[8]):
 		return True
@@ -203,8 +203,8 @@ def playticktactoe(player1= None ,):
 	if (player1==None):
 		player1= evModel(9,9,8)
 		player2=evModel(9,9,8)
-		player1.mutate(2,2)
-		player2.mutate(2,2)
+		player1.mutate(5,10)
+		player2.mutate(5,10)
 	game = [0]*9
 	turns = 0
 	end = False
@@ -224,7 +224,7 @@ def playticktactoe(player1= None ,):
 		if gameover(1,game):
 			print "WINNER 1"
 			return [1000+(-100*c),-c*2]
-		p2move = int(aw_input("play"))
+		p2move = int(raw_input("play"))
 		if(game[p2move]!=0):
 			print "player failed"
 			return [10+c,-100+c]
@@ -240,6 +240,6 @@ def playticktactoe(player1= None ,):
 		print game
 		c+=1
 last = testing()
-for k in range(600):
+for k in range(1000):
 	last = testing(last)
 playticktactoe(evModel(9,9,4,last[0]))
