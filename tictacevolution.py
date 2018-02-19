@@ -1,109 +1,9 @@
 import numpy as np
 import random
 from operator import itemgetter
-class evModel:
-	def __init__(self,inputSize, outputSize, maxSize, seed=None):
-		self.outputSize=outputSize
-		self.inputSize=inputSize
-		if(seed==None):
-			self.structure=[[[1]*inputSize]*inputSize,[0]*inputSize]*maxSize
-			#print self.structure
-			self.structure.append([[0]*outputSize]*inputSize)
-			self.structure.append([1]*outputSize)
-		else:
-			self.structure=seed
-	def mutate(self,rate,frequency):
-		isnode=False
-		outStructure=[]
-		for row in self.structure:
-			if(isnode):
-				add=[]
-				for val in row:
-					change =0
-					if (random.randint(0,frequency)==0):
-						change = random.uniform(-rate,rate)
-						if((change+val)<0):
-							change=0
-							val=0
-						if((change+val)>1):
-							change=0
-							val=1
-					add.append(val+change)
-				outStructure.append(add)
-				isnode=False
-			else:
-				add=[]
-				for vertex in row:
-					semiAdd=[]
-					for val in vertex:
-						change = 0
-						if (random.randint(0,frequency)==0):
-							change = random.uniform(-rate,rate)
-						semiAdd.append(val+change)
-					add.append(semiAdd)
-				outStructure.append(add)
-				isnode=True
-			self.structure=outStructure
-	def run(self,inputs):
-		isnode=False
-		lastNodeOut=inputs
-		for row in self.structure:
-			if(isnode):
-				tempNodeOut=[]
-				c=0
-				for node in row:
-					tempNodeOut.append(np.tanh(lastNodeOut[c]))
-					c+=1
-				lastNodeOut=tempNodeOut
-				isnode=False
-			else:
-				tempNodeOut=[]
-				c=0
-				while(c<len(row[0])):
-					out=0
-					for vertex in row:
-						#print lastNodeOut
-						out+=vertex[c]*lastNodeOut[c]
-					tempNodeOut.append(out+1)
-					c+=1
-				lastNodeOut=tempNodeOut
-				isnode=True
-		#print lastNodeOut
-		return lastNodeOut
-
-
-'''def generateAverages(models):
-	c=0
-	output=[]
-	isnode=False
-	while c<len(models[0]):
-		if(isnode):
-			row=[0]*len(models[0][c])
-		else:
-			row=[[0]*len(models[0][c][0])]*len(models[0][c])
-		for model in models:
-			if(isnode):
-				k=0
-				for entry in model[c]:
-					row[k]+=entry
-					k+=1
-			else:
-				semirow=[]'''
-def generateAverages(models):
-	c=0
-	output=[]
-	isnode=False
-	if len(models)==0:
-		return None
-	while c<len(models[0].structure):
-		row=[]
-		for model in models:
-			row.append(model.structure[c])
-		output.append(np.mean(row,axis=0).tolist())
-		c+=1
-	return output
-best = evModel(6,3,6)
-bestcount = 0
+from evolution import generateAverages
+from evolution import evModel
+from evolution import genomicBreed
 def testing(template=None):
 	global bestcount
 	global best
@@ -124,7 +24,7 @@ def testing(template=None):
 		bestmods2.append([best[1],m2])
 	bestmods1=sorted(bestmods1, key=itemgetter(0))
 	bestmods2=sorted(bestmods2, key=itemgetter(0))
-	return [generateAverages([M[1] for M in bestmods1[len(bestmods1)/4:]]),generateAverages([M[1] for M in bestmods2[len(bestmods2)/4:]])]
+	return [genomicBreed([M[1] for M in bestmods1],[1/M[0]*(-1) for M in bestmods1],1)[0],generateAverages([M[1] for M in bestmods2[len(bestmods2)/4:]])]
 	#return generateAverages(bestmods)
 def gameover(check, board):
 	if(board[0]==check and board[0]==board[1] and board[1]==board[2]):

@@ -5,9 +5,10 @@ from operator import itemgetter
 from mnist import MNIST
 import math
 class evModel:
-	def __init__(self,inputSize, outputSize, maxSize, seed=None):
+	def __init__(self,inputSize, outputSize, maxSize, seed=None, tanh=True):
 		self.outputSize=outputSize
 		self.inputSize=inputSize
+		self.tanh=tanh
 		if(seed==None):
 			self.structure=[[[1]*inputSize]*inputSize]*maxSize
 			#print self.structure
@@ -38,7 +39,10 @@ class evModel:
 				for vertex in row:
 					#print lastNodeOut
 					out+=vertex[c]*lastNodeOut[c]
-				tempNodeOut.append(1 / (1 + math.exp(-out)))
+				if(self.tanh):
+					tempNodeOut.append(np.tanh(out))
+				else:
+					tempNodeOut.append(1 / (1 + math.exp(-out)))
 				c+=1
 			lastNodeOut=tempNodeOut
 		print lastNodeOut
