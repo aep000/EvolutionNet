@@ -24,7 +24,8 @@ def testing(template=None):
 		bestmods2.append([best[1],m2])
 	bestmods1=sorted(bestmods1, key=itemgetter(0))
 	bestmods2=sorted(bestmods2, key=itemgetter(0))
-	return [genomicBreed([M[1] for M in bestmods1],[1/M[0]*(-1) for M in bestmods1],1)[0],generateAverages([M[1] for M in bestmods2[len(bestmods2)/4:]])]
+	print bestmods1[0]
+	return [genomicBreed([M[1] for M in bestmods1[len(bestmods1)/4:]],[M[0] for M in bestmods1[len(bestmods1)/4:]],1)[0],generateAverages([M[1] for M in bestmods2[len(bestmods2)/4:]])]
 	#return generateAverages(bestmods)
 def gameover(check, board):
 	if(board[0]==check and board[0]==board[1] and board[1]==board[2]):
@@ -65,7 +66,7 @@ def ticktactoe(player1= None ,player2=None):
 
 		if(game[p1move]!=0):
 			print "player failed"
-			return [-100+c,10+c]
+			return [c,10+c]
 		else:
 			print "move played"
 			game[p1move] = 1
@@ -76,12 +77,12 @@ def ticktactoe(player1= None ,player2=None):
 				streak =1
 				lastwinner=1
 			print "WINNER 1"
-			return [1000+(-100*c),(-5+c)*streak]
+			return [1000+(-100*c),(c)]
 		p2move = player2.run(game)
 		p2move = p2move.index(max(p2move))
 		if(game[p2move]!=0):
 			print "player failed"
-			return [10+c,-10000+c]
+			return [10+c,c]
 		else:
 			print "move played"
 			game[p2move] = -1
@@ -92,7 +93,7 @@ def ticktactoe(player1= None ,player2=None):
 				streak =1
 				lastwinner=-1
 			print "WINNER 2"
-			return [(-5+c)*streak,1000+(-100*c)]
+			return [(c),1000+(-100*c)]
 		if(sum(game)==7):
 			print "TIE"
 			return [200,200]

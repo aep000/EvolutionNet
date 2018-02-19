@@ -40,9 +40,9 @@ class evModel:
 					#print lastNodeOut
 					out+=vertex[c]*lastNodeOut[c]
 				if(self.tanh):
-					tempNodeOut.append(np.tanh(out))
+					tempNodeOut.append(np.tanh(out+.00000001))
 				else:
-					tempNodeOut.append(1 / (1 + math.exp(-out)))
+					tempNodeOut.append(1.0 / (1 + math.exp(-out)))
 				c+=1
 			lastNodeOut=tempNodeOut
 		print lastNodeOut
@@ -82,12 +82,13 @@ def generateAverages(models):
 	return output
 def genomicBreed(models,scores,genSize, scoreIncreasing=True):
 	scoreProb= []
-	total = sum(scores)
+	total = sum(scores)*1.0
 	for score in scores:
 		if(not scoreIncreasing):
 			scoreProb.append(1-(score/total))
 		else:
 			scoreProb.append(score/total)
+	print scoreProb
 	nextGen=[]
 	for c in xrange(genSize):
 		individual=[]
