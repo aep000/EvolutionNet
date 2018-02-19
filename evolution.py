@@ -4,8 +4,16 @@ from sklearn.datasets import load_digits
 from operator import itemgetter
 from mnist import MNIST
 import math
+#model Object
 class evModel:
 	def __init__(self,inputSize, outputSize, maxSize, seed=None, tanh=True):
+		'''initialize weights of model with
+		inputSize= amount of inputs
+		outputSize= amount of outputs
+		maxSize = max number of layers
+		seed= structure of prexisisting model [ie change structure array into model object]
+		tanh= Choose between logistic and tanh funcitons as activation functions
+		'''
 		self.outputSize=outputSize
 		self.inputSize=inputSize
 		self.tanh=tanh
@@ -16,6 +24,10 @@ class evModel:
 		else:
 			self.structure=seed
 	def mutate(self,rate,frequency):
+			'''randomly change wieghts between a certain amount
+			(weight+randomInRange(rate,-rate),
+			weights are adjusted at a certain frequency ((1/frequency)*weightCount) weights are adjusted
+			'''
 		outStructure=[]
 		for row in self.structure:
 			add=[]
