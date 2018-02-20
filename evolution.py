@@ -24,10 +24,10 @@ class evModel:
 		else:
 			self.structure=seed
 	def mutate(self,rate,frequency):
-			'''randomly change wieghts between a certain amount
-			(weight+randomInRange(rate,-rate),
-			weights are adjusted at a certain frequency ((1/frequency)*weightCount) weights are adjusted
-			'''
+		'''randomly change wieghts between a certain amount
+		(weight+randomInRange(rate,-rate),
+		weights are adjusted at a certain frequency ((1/frequency)*weightCount) weights are adjusted
+		'''
 		outStructure=[]
 		for row in self.structure:
 			add=[]
