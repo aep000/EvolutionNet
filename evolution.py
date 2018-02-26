@@ -2,11 +2,10 @@ import numpy as np
 import random
 from sklearn.datasets import load_digits
 from operator import itemgetter
-
 import math
 #model Object
 class evModel:
-	def __init__(self,inputSize, outputSize, maxSize, seed=None, activation=0, ):
+	def __init__(self,inputSize, outputSize, hiddenLayers, seed=None, activation=0, ):
 		'''initialize weights of model with
 		inputSize= amount of inputs
 		outputSize= amount of outputs
@@ -14,13 +13,17 @@ class evModel:
 		seed= structure of prexisisting model [ie change structure array into model object]
 		tanh= Choose between logistic and tanh funcitons as activation functions
 		'''
+		self.structure=[]
 		self.outputSize=outputSize
 		self.inputSize=inputSize
 		self.activation=activation
 		if(seed==None):
-			self.structure=[[[1]*inputSize]*inputSize]*maxSize
-			#print self.structure
-			self.structure.append([[0]*outputSize]*inputSize)
+			c=0
+			while c<len(hiddenLayers)-1:
+				self.structure.append([[1]*hiddenLayers[0]]*inputSize)
+				#print self.structure
+				c+=1;
+			self.structure.append([[1]*outputSize]*hiddenLayers[-1])
 		else:
 			self.structure=seed
 	def mutate(self,rate,frequency):
