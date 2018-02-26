@@ -2,11 +2,11 @@ import numpy as np
 import random
 from sklearn.datasets import load_digits
 from operator import itemgetter
-from mnist import MNIST
+
 import math
 #model Object
 class evModel:
-	def __init__(self,inputSize, outputSize, maxSize, seed=None, tanh=True):
+	def __init__(self,inputSize, outputSize, maxSize, seed=None, activation=0, ):
 		'''initialize weights of model with
 		inputSize= amount of inputs
 		outputSize= amount of outputs
@@ -16,7 +16,7 @@ class evModel:
 		'''
 		self.outputSize=outputSize
 		self.inputSize=inputSize
-		self.tanh=tanh
+		self.activation=activation
 		if(seed==None):
 			self.structure=[[[1]*inputSize]*inputSize]*maxSize
 			#print self.structure
@@ -41,8 +41,10 @@ class evModel:
 				add.append(semiAdd)
 			outStructure.append(add)
 			self.structure=outStructure
-	def run(self,inputs):
+	def run(self,inputs, v=False):
 		lastNodeOut=inputs
+		if(v):
+			print inputs
 		for row in self.structure:
 			tempNodeOut=[]
 			c=0
@@ -51,13 +53,19 @@ class evModel:
 				for vertex in row:
 					#print lastNodeOut
 					out+=vertex[c]*lastNodeOut[c]
-				if(self.tanh):
-					tempNodeOut.append(np.tanh(out+.00000001))
+				if(self.activation==0):
+					tempNodeOut.append(np.tanh(out))
+				elif(self.activation==1):
+					if(out>0):
+						tempNodeOut.append(out)
+					else:
+						tempNodeOut.append(0)
 				else:
 					tempNodeOut.append(1.0 / (1 + math.exp(-out)))
 				c+=1
 			lastNodeOut=tempNodeOut
-		print lastNodeOut
+		if(v):
+			print lastNodeOut
 		return lastNodeOut
 
 
