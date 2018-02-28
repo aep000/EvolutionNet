@@ -24,8 +24,8 @@ def testing(template=None):
 		bestmods2.append([best[1],m2])
 	bestmods1=sorted(bestmods1, key=itemgetter(0))
 	bestmods2=sorted(bestmods2, key=itemgetter(0))
-	print bestmods1[0]
-	return [genomicBreed([M[1] for M in bestmods1[len(bestmods1)/4:]],[M[0] for M in bestmods1[len(bestmods1)/4:]],1)[0],generateAverages([M[1] for M in bestmods2[len(bestmods2)/4:]])]
+	print bestmods1
+	return [bestmods1[0][1].structure,generateAverages([M[1] for M in bestmods2[len(bestmods2)/4:]])]
 	#return generateAverages(bestmods)
 def gameover(check, board):
 	if(board[0]==check and board[0]==board[1] and board[1]==board[2]):
