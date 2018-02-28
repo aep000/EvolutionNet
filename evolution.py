@@ -51,7 +51,7 @@ class evModel:
 		for row in self.structure:
 			tempNodeOut=[]
 			c=0
-			while(c<len(row[0])):
+			while(c<len(row)):
 				out=0
 				for vertex in row:
 					#print lastNodeOut

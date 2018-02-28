@@ -8,11 +8,11 @@ def testing(template=None):
 	global bestcount
 	global best
 	if(template==None):
-		models1=[evModel(9,9,4) for k in range(200)]
-		models2=[evModel(9,9,4) for k in range(200)]
+		models1=[evModel(9,9,[16,16,9]) for k in range(200)]
+		models2=[evModel(9,9,[16,16,9]) for k in range(200)]
 	else:
-		models1=[evModel(9,9,4,template[0]) for k in range(100)]
-		models2=[evModel(9,9,4,template[1]) for k in range(100)]
+		models1=[evModel(9,9,[16,16,9],template[0]) for k in range(100)]
+		models2=[evModel(9,9,[16,16,9],template[1]) for k in range(100)]
 	models = zip(models1,models2)
 	bestmods1=[]
 	bestmods2=[]
@@ -51,8 +51,8 @@ def ticktactoe(player1= None ,player2=None):
 	global lastwinner
 	global streak
 	if (player1==None):
-		player1= evModel(9,9,8)
-		player2=evModel(9,9,8)
+		player1= evModel(9,9,[16,16,9])
+		player2=evModel(9,9,[16,16,9])
 		player1.mutate(2,2)
 		player2.mutate(2,2)
 	game = [0]*9
@@ -102,8 +102,8 @@ def ticktactoe(player1= None ,player2=None):
 
 def playticktactoe(player1= None ,):
 	if (player1==None):
-		player1= evModel(9,9,8)
-		player2=evModel(9,9,8)
+		player1= evModel(9,9,[16,16,9])
+		player2=evModel(9,9,[16,16,9])
 		player1.mutate(5,10)
 		player2.mutate(5,10)
 	game = [0]*9
@@ -143,4 +143,4 @@ def playticktactoe(player1= None ,):
 last = testing()
 for k in range(1000):
 	last = testing(last)
-playticktactoe(evModel(9,9,4,last[0]))
+playticktactoe(evModel(9,9,[16,16,9],last[0]))
