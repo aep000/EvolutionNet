@@ -1,4 +1,2 @@
 # EvolutionNet
-Evolution based machine learning algorithm implimentation in python
-
-NEAT is not implimented
+Evolution based machine learning algorithm implimentation in python used to play games like pong
